@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Change to the user's home directory
+cd ~ || { echo "Failed to navigate to home directory!"; exit 1; }
+
+# Check if the shaipot directory exists
+if [[ ! -d "shaipot" ]]; then
+    echo "shaipot directory not found in the home directory!"
+    exit 1
+fi
+
 # Update and ensure required packages are installed
 echo "Updating package lists and installing necessary packages..."
 sudo apt update
@@ -9,7 +18,7 @@ sudo apt install -y libssl-dev pkg-config
 export PKG_CONFIG_PATH="/usr/lib/aarch64-linux-gnu/pkgconfig"
 
 # Navigate to shaipot directory
-cd shaipot || { echo "shaipot directory not found!"; exit 1; }
+cd shaipot || { echo "Failed to navigate to shaipot directory!"; exit 1; }
 
 # Clean previous builds
 echo "Cleaning previous builds..."
