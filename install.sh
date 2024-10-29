@@ -1,25 +1,4 @@
 #!/bin/bash
-
-# Update and upgrade system packages
-sudo apt update
-sudo apt upgrade -y
-
-# Install necessary packages
-sudo apt install -y git curl cargo libssl-dev pkg-config
-
-# Install Rust
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-source $HOME/.cargo/env  # Ensure Rust is in the environment
-
-# Add ARM target for Rust
-rustup target add aarch64-linux-android
-
-# Install build essentials and CMake
-sudo apt install -y build-essential cmake
-
-# Set PKG_CONFIG_PATH to find OpenSSL
-export PKG_CONFIG_PATH="/usr/lib/aarch64-linux-gnu/pkgconfig"
-
 # Clone the Shaipot repository
 git clone https://github.com/tanishdt/shaipot.git
 
