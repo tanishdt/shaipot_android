@@ -1,69 +1,99 @@
-# Shaipot Android Setup
+# Shaipot - Shaicoin Miner for Android
 
-This repository provides an automated setup script for mining Shaicoin on an Android device using UserLAnd. The `install.sh` script installs all necessary dependencies, sets up Rust for ARM architecture, clones the Shaipot repository, compiles it, and prepares a mining script.
+Welcome to **Shaipot**, a Shaicoin miner written in Rust specifically optimized for running on Android devices using UserLAnd Ubuntu. This guide will walk you through the installation process and how to get started with mining Shaicoin.
 
-## Prerequisites
+## Table of Contents
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+  - [One-Click Installer](#one-click-installer)
+  - [Manual Installation](#manual-installation)
+- [Running the Miner](#running-the-miner)
+- [Usage Example](#usage-example)
+- [Contributing](#contributing)
+- [License](#license)
 
-- **UserLAnd** app installed on your Android device.
-- Sufficient storage space and processing power for compiling and mining.
+## Features
+- Efficient and fast mining capabilities.
+- Multi-threaded support for optimal CPU utilization.
+- Minimal setup required for beginners.
 
-## Getting Started
+## Requirements
+- An Android device with UserLAnd installed.
+- Basic knowledge of terminal commands.
+- A valid Shaicoin address and a mining pool URL.
 
-### 1. Install the Script
+## Installation
 
-You can easily download the `install.sh` script using `curl`. Open your terminal and run:
+### One-Click Installer
+To simplify the installation process, you can use the one-click installer script. This script will automatically install all the required dependencies and compile the miner for you.
+
+1. **Open Your Terminal in UserLAnd**.
+2. **Run the following command to execute the installer script**:
+
+   ```bash
+   curl -sSL https://raw.githubusercontent.com/tanishdt/shaipot_android/main/install.sh | bash
+   ```
+
+3. **Source the Cargo Environment**:
+   After the installation is complete, run this command to set up Rust in your current shell:
+
+   ```bash
+   source $HOME/.cargo/env
+   ```
+
+### Manual Installation
+If you prefer to install the dependencies manually, follow these steps:
+
+1. **Update Package List**:
+   ```bash
+   sudo apt update && sudo apt upgrade -y
+   ```
+
+2. **Install Essential Packages**:
+   ```bash
+   sudo apt install -y build-essential pkg-config libssl-dev git
+   ```
+
+3. **Install Rust**:
+   ```bash
+   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+   ```
+
+4. **Clone the Shaipot Repository**:
+   ```bash
+   git clone https://github.com/shaicoin/shaipot.git
+   cd shaipot
+   ```
+
+5. **Compile Shaipot**:
+   ```bash
+   cargo rustc --release -- -C opt-level=3 -C target-cpu=native -C codegen-units=1 -C debuginfo=0
+   ```
+
+## Running the Miner
+Once the compilation is complete, you can run the Shaipot miner using the following command:
 
 ```bash
-curl -LO https://raw.githubusercontent.com/tanishdt/shaipot_android/main/install.sh
+cd target/release
+./shaipot --address YOUR_SHAICOIN_ADDRESS --pool YOUR_POOL_URL --threads $(nproc)
 ```
 
-### 2. Make the Script Executable
+Replace `YOUR_SHAICOIN_ADDRESS` and `YOUR_POOL_URL` with your actual mining address and pool URL.
 
-After downloading, you'll need to make the script executable. Run:
+## Usage Example
+For example, to run the miner with your address and a pool URL, you can use:
 
 ```bash
-chmod +x install.sh
+./shaipot --address sh1qf6vtjweu6d6s5ttshcje3nuxpazfcyvmcank0z.rn10 --pool ws://162.220.160.74:3333 --threads $(nproc)
 ```
 
-### 3. Run the Script
-
-Now, you can run the script to begin the installation process:
-
-```bash
-./install.sh
-```
-
-### 4. Start Mining
-
-After the setup is complete, you can start mining by running the generated script:
-
-```bash
-./shaipot/mine_shaicoin.sh
-```
-
-## Script Details
-
-The `install.sh` script performs the following steps:
-
-1. Updates and upgrades system packages.
-2. Installs essential packages, including Git, Curl, and Cargo.
-3. Installs Rust and configures it for ARM architecture.
-4. Adds the ARM target for Rust (`aarch64-linux-android`).
-5. Installs build essentials and CMake.
-6. Builds the Shaipot project for the ARM target.
-7. Clones the official Shaipot repository.
-8. Creates a mining script (`mine_shaicoin.sh`) with the appropriate command.
-
-## Troubleshooting
-
-- **Permission Errors**: Ensure the script has executable permissions with `chmod +x install.sh`.
-- **Low Memory**: Compilation may be resource-intensive; close other apps and processes if possible.
-- **Rust or Cargo Not Found**: If Rust or Cargo is not found, source Rust by running `source $HOME/.cargo/env` before running the script.
-
-## Contact
-
-For any issues or questions, feel free to open an issue on the [repository](https://github.com/tanishdt/shaipot_android).
+## Contributing
+Contributions are welcome! If you have suggestions for improvements or bug fixes, feel free to submit a pull request or open an issue.
 
 ## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-This project is licensed under the MIT License.
+---
+
+Happy Mining!
