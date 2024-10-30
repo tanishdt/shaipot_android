@@ -35,4 +35,4 @@ cargo rustc --release -- -C opt-level=3 -C target-cpu=native -C codegen-units=1 
 # Completion message
 echo "Shaipot installation and compilation completed successfully!"
 echo "You can run the miner using the following command:"
-echo "./target/release/shaipot --address YOUR_SHAICOIN_ADDRESS --pool YOUR_POOL_URL --threads \$(nproc)"
+echo "./target/release/shaipot --address YOUR_SHAICOIN_ADDRESS --pool YOUR_POOL_URL
