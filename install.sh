@@ -1,31 +1,38 @@
 #!/bin/bash
 
-# Update package lists
-sudo apt update
+# Update package list and upgrade installed packages
+echo "Updating package list and upgrading installed packages..."
+sudo apt update && sudo apt upgrade -y
 
-# Install Git, build tools, OpenSSL, and other dependencies
-sudo apt install -y git build-essential openssl libssl-dev
+# Install essential build tools
+echo "Installing essential build tools..."
+sudo apt install -y build-essential pkg-config
 
-# Install Rust and Cargo (if not already installed)
-if ! command -v cargo &> /dev/null; then
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-    source "$HOME/.cargo/env"
-else
-    echo "Rust is already installed."
-fi
+# Install OpenSSL development libraries
+echo "Installing OpenSSL development libraries..."
+sudo apt install -y libssl-dev
 
-# Clone the shaipot repository
-if [ ! -d "shaipot" ]; then
-    git clone https://github.com/tanishdt/shaipot.git
-else
-    echo "shaipot repository already cloned."
-fi
+# Install Git
+echo "Installing Git..."
+sudo apt install -y git
 
-# Navigate into the repository directory
-cd shaipot
+# Install Rust
+echo "Installing Rust..."
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
-# Compile with optimized settings
+# Source the cargo environment
+echo "Please run 'source \$HOME/.cargo/env' to configure Rust in your shell."
+
+# Clone the Shaipot repository
+echo "Cloning the Shaipot repository..."
+git clone https://github.com/shaicoin/shaipot.git
+
+# Compile Shaipot
+echo "Compiling Shaipot..."
+cd shaipot || { echo "Failed to navigate to shaipot directory"; exit 1; }
 cargo rustc --release -- -C opt-level=3 -C target-cpu=native -C codegen-units=1 -C debuginfo=0
 
-# Run the mining program (adjust as needed for your mining configuration)
-./target/release/shaipot
+# Completion message
+echo "Shaipot installation and compilation completed successfully!"
+echo "You can run the miner using the following command:"
+echo "./target/release/shaipot --address YOUR_SHAICOIN_ADDRESS --pool YOUR_POOL_URL --threads \$(nproc)"
