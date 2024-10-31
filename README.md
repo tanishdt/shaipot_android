@@ -98,9 +98,5 @@ For example, to run the miner with your address and a pool URL, you can use:
 ## Contributing
 Contributions are welcome! If you have suggestions for improvements or bug fixes, feel free to submit a pull request or open an issue.
 
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
 
 Happy Mining!
