@@ -60,13 +60,20 @@ If you prefer to install the dependencies manually, follow these steps:
    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
    ```
 
-4. **Clone the Shaipot Repository**:
+4. **Source the Cargo Environment**:
+   After the installation is complete, run this command to set up Rust in your current shell:
+
+   ```bash
+   source $HOME/.cargo/env
+   ``` 
+
+5. **Clone the Shaipot Repository**:
    ```bash
    git clone https://github.com/shaicoin/shaipot.git
    cd shaipot
    ```
 
-5. **Compile Shaipot**:
+6. **Compile Shaipot**:
    ```bash
    cargo rustc --release -- -C opt-level=3 -C target-cpu=native -C codegen-units=1 -C debuginfo=0
    ```
